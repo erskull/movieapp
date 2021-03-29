@@ -3,7 +3,6 @@
     <v-container fluid class="pa-0">
       <v-row>
         <v-col cols="12" md="12">
-          <!-- <v-hover v-slot="{ hover }"> -->
           <div>
             <v-card
               elevation="0"
@@ -47,19 +46,110 @@
                           <p class="mb-3">
                             {{ currentMovie.overview }}
                           </p>
-                          <v-btn
-                            large
-                            class="mr-3 primary rounded-pill"
-                            link
-                            :to="'/movie/' + currentMovie.id"
-                          >
-                            <v-icon class="mr-2">theaters</v-icon>Watch
-                            Now</v-btn
-                          >
-                          <!-- <v-btn large class="rounded-pill">
-                            <v-icon>play_arrow</v-icon>
-                            Play Now
-                          </v-btn> -->
+                          <div>
+                            <!-- Movie Dialog -->
+                            <v-dialog
+                              v-model="MovieDialog"
+                              persistent
+                              max-width="900px"
+                            >
+                              <template v-slot:activator="{ on, attrs }">
+                                <v-btn
+                                  large
+                                  class="mr-3 primary rounded-pill"
+                                  v-bind="attrs"
+                                  v-on="on"
+                                >
+                                  <v-icon class="mr-2">theaters</v-icon>Watch
+                                  Movie</v-btn
+                                >
+                              </template>
+                              <v-card
+                                elevation="0"
+                                color="transparent"
+                                class="ma-0 pa-0"
+                              >
+                                <v-card-text
+                                  class="py-0 pr-0 d-flex align-center"
+                                >
+                                  <v-spacer></v-spacer>
+                                  <v-btn
+                                    icon
+                                    @click="MovieDialog = !MovieDialog"
+                                  >
+                                    <v-icon>close</v-icon>
+                                  </v-btn>
+                                </v-card-text>
+                                <v-card-text class="pa-0 fill-height">
+                                  <v-responsive :aspect-ratio="16 / 9">
+                                    <iframe
+                                      :src="
+                                        'https://www.2embed.ru/embed/imdb/movie?id=' +
+                                          imdbId
+                                      "
+                                      frameborder="0"
+                                      width="100%"
+                                      height="100%"
+                                      style="border:0;"
+                                      allowfullscreen
+                                      loading="lazy"
+                                    ></iframe>
+                                  </v-responsive>
+                                </v-card-text>
+                              </v-card>
+                            </v-dialog>
+                            <!-- Trailer Dialog -->
+                            <v-dialog
+                              v-model="TrailerDialog"
+                              persistent
+                              max-width="900px"
+                            >
+                              <template v-slot:activator="{ on, attrs }">
+                                <v-btn
+                                  large
+                                  v-bind="attrs"
+                                  v-on="on"
+                                  class="rounded-pill"
+                                >
+                                  <v-icon>play_arrow</v-icon>
+                                  Play Trailer
+                                </v-btn>
+                              </template>
+                              <v-card
+                                elevation="0"
+                                color="transparent"
+                                class="ma-0 pa-0"
+                              >
+                                <v-card-text
+                                  class="py-0 pr-0 d-flex align-center"
+                                >
+                                  <v-spacer></v-spacer>
+                                  <v-btn
+                                    icon
+                                    @click="TrailerDialog = !TrailerDialog"
+                                  >
+                                    <v-icon>close</v-icon>
+                                  </v-btn>
+                                </v-card-text>
+                                <v-card-text class="pa-0 fill-height">
+                                  <v-responsive :aspect-ratio="16 / 9">
+                                    <iframe
+                                      width="100%"
+                                      class="fill-height"
+                                      :src="
+                                        'https://www.youtube-nocookie.com/embed/' +
+                                          trailer[0].key
+                                      "
+                                      title="YouTube video player"
+                                      frameborder="0"
+                                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                      allowfullscreen
+                                    ></iframe>
+                                  </v-responsive>
+                                </v-card-text>
+                              </v-card>
+                            </v-dialog>
+                          </div>
                         </div>
                       </v-col>
                     </v-row>
@@ -68,7 +158,28 @@
               </v-img>
             </v-card>
           </div>
-          <!-- </v-hover> -->
+        </v-col>
+      </v-row>
+    </v-container>
+    <v-container>
+      <v-row>
+        <v-col cols="12" md="8">
+          <v-card class="mb-3">
+            <v-responsive :aspect-ratio="16 / 9">
+              <iframe
+                :src="'https://www.2embed.ru/embed/imdb/movie?id=' + imdbId"
+                frameborder="0"
+                width="100%"
+                height="100%"
+                style="border:0;"
+                allowfullscreen
+                loading="lazy"
+              ></iframe>
+            </v-responsive>
+          </v-card>
+          <v-card class="mb-3">
+            <v-card-title>Cast</v-card-title>
+          </v-card>
         </v-col>
       </v-row>
     </v-container>
@@ -81,15 +192,19 @@ export default {
     return {
       id: this.$route.params.id,
       currentMovie: "",
+      movieIframe: null,
+      TrailerDialog: false,
+      MovieDialog: false,
+      trailer: "",
     };
   },
   mounted() {
-    this.onStartup(), this.callMovie();
+    this.onStartup(), this.callMovie(), this.callMovieTrailer();
   },
   methods: {
     async onStartup() {
       await this.$http
-        .get("/movie/" + this.id + "?api_key=386a231dcbaf190d09142d84a5bf8fe5")
+        .get("/movie/" + this.id)
         .then((res) => {
           this.currentMovie = res.data;
           this.genres = res.data.genres;
@@ -98,7 +213,6 @@ export default {
           this.imdbId = res.data.imdb_id;
         })
         .catch((error) => {
-          // this.error = error
           console.log(error);
         });
     },
@@ -111,6 +225,16 @@ export default {
         })
         .then((res) => {
           this.movieIframe = res;
+        });
+    },
+    async callMovieTrailer() {
+      await this.$http
+        .get("/movie/" + this.id + "/videos")
+        .then((res) => {
+          this.trailer = res.data.results;
+        })
+        .catch((error) => {
+          console.log(error);
         });
     },
   },
