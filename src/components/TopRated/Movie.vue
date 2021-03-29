@@ -1,11 +1,11 @@
 <template>
-  <div class="popular-movie">
+  <div class="latest-movie">
     <v-container>
       <v-row>
         <v-col class="pb-0" cols="12">
           <v-card class="d-flex align-center" flat color="transparent">
             <v-card-title class="pl-0">
-              Popular Movies
+              Top Rated Movies
             </v-card-title>
             <v-spacer></v-spacer>
             <v-hover v-slot="{ hover }">
@@ -29,26 +29,26 @@
           class="pt-0"
           cols="12"
           md="3"
-          v-for="(PMovie, i) in PopularMovieToggle"
+          v-for="(TRMovie, i) in TopRatedMovieToggle"
           :key="i"
         >
           <v-card
             link
             :ripple="false"
             height="100%"
-            :to="'/movie/' + PMovie.id"
+            :to="'/movie/' + TRMovie.id"
             style="overflow:hidden;"
           >
             <v-card elevation="12" class="rounded-0">
               <v-img
                 height="400"
                 class="align-end"
-                :src="'http://image.tmdb.org/t/p/w500' + PMovie.poster_path"
+                :src="'http://image.tmdb.org/t/p/w500' + TRMovie.poster_path"
               >
               </v-img>
             </v-card>
             <v-card-text class="white--text text-body-1">
-              {{ PMovie.title }}
+              {{ TRMovie.title }}
             </v-card-text>
           </v-card>
         </v-col>
@@ -61,19 +61,20 @@
 export default {
   data() {
     return {
-      MoviePopular: "",
+      MovieTopRated: "",
       seeAll: false,
     };
   },
   mounted() {
-    this.getPopularMovie();
+    this.getTopRatedMovie();
   },
   methods: {
-    async getPopularMovie() {
+    async getTopRatedMovie() {
       await this.$http
-        .get("movie/popular")
+        .get("movie/top_rated")
         .then((res) => {
-          this.MoviePopular = res.data.results;
+          this.MovieTopRated = res.data.results;
+          console.log(res.data.results);
         })
         .catch((error) => {
           console.log(error);
@@ -81,11 +82,11 @@ export default {
     },
   },
   computed: {
-    PopularMovieToggle() {
+    TopRatedMovieToggle() {
       if (this.seeAll) {
-        return this.MoviePopular.slice(0, Infinity);
+        return this.MovieTopRated.slice(0, 21);
       } else {
-        return this.MoviePopular.slice(0, 4);
+        return this.MovieTopRated.slice(0, 4);
       }
     },
   },

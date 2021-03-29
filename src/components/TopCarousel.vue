@@ -1,285 +1,99 @@
 <template>
   <div class="topcarousel">
-    <v-container fluid class="pa-0">
-      <v-row>
-        <v-col cols="12" md="12">
-          <v-hover v-slot="{ hover }">
-            <div>
-              <v-card
-                elevation="0"
-                width="100%"
-                class="rounded-0"
-                v-if="DiscoverMovie"
-              >
-                <v-img
-                  position="top top"
-                  class="align-end"
-                  :class="hover ? 'imageHover' : ''"
-                  height="600"
-                  :src="
-                    'http://image.tmdb.org/t/p/original' +
-                      DiscoverMovie[0].backdrop_path
-                  "
-                >
+    <v-hover v-slot="{ hover }">
+      <v-carousel
+        v-model="carouselModel"
+        hide-delimiters
+        show-arrows-on-hover
+        height="600"
+        :interval="4000"
+        :cycle="hover ? false : true"
+      >
+        <template v-slot:prev="{ on, attrs }">
+          <v-btn icon x-large color="rgb(30,30,30)" v-bind="attrs" v-on="on">
+            <v-icon color="white">west</v-icon>
+          </v-btn>
+        </template>
+        <template v-slot:next="{ on, attrs }">
+          <v-btn icon x-large color="rgb(30,30,30)" v-bind="attrs" v-on="on">
+            <v-icon color="white">east</v-icon>
+          </v-btn>
+        </template>
+        <v-carousel-item v-for="(DMovie, i) in DiscoverMovie" :key="i">
+          <v-container fluid class="pa-0">
+            <v-row>
+              <v-col cols="12" md="12">
+                <div>
                   <v-card
-                    color="transparent"
                     elevation="0"
-                    height="600"
-                    class="py-10 rounded-0 d-flex align-end"
-                    style="background:linear-gradient(90deg,rgba(0,0,0,1),rgba(30,30,30,0))"
-                  >
-                    <v-container>
-                      <v-row>
-                        <v-col cols="12" md="3">
-                          <v-img
-                            :src="
-                              'http://image.tmdb.org/t/p/original' +
-                                DiscoverMovie[0].poster_path
-                            "
-                          ></v-img>
-                        </v-col>
-                        <v-col cols="12" md="6" class="d-flex align-end">
-                          <div>
-                            <div
-                              class="text-h3 font-weight-black white--text mb-3"
-                            >
-                              {{ DiscoverMovie[0].title }}
-                            </div>
-                            <div class="mb-3">
-                              {{ DiscoverMovie[0].overview }}
-                            </div>
-                            <v-btn
-                              large
-                              class="mr-3 primary"
-                              link
-                              :to="'/movie/' + DiscoverMovie[0].id"
-                            >
-                              <v-icon class="mr-2">info</v-icon> More
-                              Info</v-btn
-                            >
-                            <v-btn large>
-                              <v-icon>play_arrow</v-icon>
-                              Play Now
-                            </v-btn>
-                          </div>
-                        </v-col>
-                      </v-row>
-                    </v-container>
-                  </v-card>
-                </v-img>
-              </v-card>
-            </div>
-          </v-hover>
-        </v-col>
-      </v-row>
-    </v-container>
-    <!-- <v-container>
-      <v-row>
-        <v-col cols="12" md="8" class="pr-0 pb-0"> </v-col>
-        <v-col cols="12" md="4" class="pl-0 pb-0">
-          <v-hover v-slot="{ hover }">
-            <div>
-              <v-card
-                class="rounded-0"
-                v-if="DiscoverTv"
-                link
-                :to="'/movie/' + DiscoverTv[1].id"
-                :ripple="false"
-              >
-                <v-img
-                  class="align-end"
-                  :class="hover ? 'imageHover' : ''"
-                  position="top center"
-                  height="175"
-                  :src="
-                    'http://image.tmdb.org/t/p/original' +
-                      DiscoverTv[0].backdrop_path
-                  "
-                >
-                  <v-card
+                    width="100%"
                     class="rounded-0"
-                    :color="hover ? 'rgba(0,0,0,0.5)' : 'rgba(30,30,30,0.5)'"
-                    style="backdrop-filter:blur(20px);"
+                    v-if="DiscoverMovie"
                   >
-                    <v-card-text class="white--text">
-                      {{ DiscoverTv[0].name }}
-                    </v-card-text>
+                    <v-img
+                      position="top top"
+                      class="align-end"
+                      height="600"
+                      :src="
+                        'http://image.tmdb.org/t/p/original' +
+                          DMovie.backdrop_path
+                      "
+                    >
+                      <v-card
+                        color="transparent"
+                        elevation="0"
+                        height="900"
+                        class="py-10 rounded-0 d-flex align-end"
+                        style="background:linear-gradient(0deg,rgba(30,30,30,1),rgba(30,30,30,0));"
+                      >
+                        <v-container>
+                          <v-row>
+                            <v-col cols="12" md="3">
+                              <v-img
+                                eager
+                                :src="
+                                  'http://image.tmdb.org/t/p/w500' +
+                                    DMovie.poster_path
+                                "
+                              ></v-img>
+                            </v-col>
+                            <v-col cols="12" md="6" class="d-flex align-end">
+                              <div>
+                                <div
+                                  class="text-h3 font-weight-black white--text mb-3"
+                                >
+                                  {{ DMovie.title }}
+                                </div>
+                                <p class="mb-3">
+                                  {{ DMovie.overview }}
+                                </p>
+                                <v-btn
+                                  large
+                                  class="mr-3 primary rounded-pill"
+                                  link
+                                  :to="'/movie/' + DMovie.id"
+                                >
+                                  <v-icon class="mr-2">info</v-icon> More
+                                  Info</v-btn
+                                >
+                                <v-btn large class="rounded-pill">
+                                  <v-icon>play_arrow</v-icon>
+                                  Play Now
+                                </v-btn>
+                              </div>
+                            </v-col>
+                          </v-row>
+                        </v-container>
+                      </v-card>
+                    </v-img>
                   </v-card>
-                </v-img>
-              </v-card>
-            </div>
-          </v-hover>
-          <v-hover v-slot="{ hover }">
-            <div>
-              <v-card
-                class="rounded-0"
-                v-if="DiscoverMovie"
-                link
-                :to="'/movie/' + DiscoverMovie[1].id"
-                :ripple="false"
-              >
-                <v-img
-                  class="align-end"
-                  :class="hover ? 'imageHover' : ''"
-                  position="top center"
-                  height="175"
-                  :src="
-                    'http://image.tmdb.org/t/p/original' +
-                      DiscoverMovie[1].backdrop_path
-                  "
-                >
-                  <v-card
-                    class="rounded-0"
-                    :color="hover ? 'rgba(0,0,0,0.5)' : 'rgba(30,30,30,0.5)'"
-                    style="backdrop-filter:blur(20px);"
-                  >
-                    <v-card-text class="white--text">
-                      {{ DiscoverMovie[1].title }}
-                    </v-card-text>
-                  </v-card>
-                </v-img>
-              </v-card>
-            </div>
-          </v-hover>
-        </v-col>
-        <v-col cols="12" md="3" class="pt-0 pr-0">
-          <v-hover v-slot="{ hover }">
-            <div>
-              <v-card
-                class="rounded-0"
-                v-if="DiscoverTv"
-                link
-                :to="'/movie/' + DiscoverTv[1].id"
-                :ripple="false"
-              >
-                <v-img
-                  class="align-end"
-                  :class="hover ? 'imageHover' : ''"
-                  position="top center"
-                  height="200"
-                  :src="
-                    'http://image.tmdb.org/t/p/original' +
-                      DiscoverTv[1].backdrop_path
-                  "
-                >
-                  <v-card
-                    class="rounded-0"
-                    :color="hover ? 'rgba(0,0,0,0.5)' : 'rgba(30,30,30,0.5)'"
-                    style="backdrop-filter:blur(20px);"
-                  >
-                    <v-card-text class="white--text">
-                      {{ DiscoverTv[1].name }}
-                    </v-card-text>
-                  </v-card>
-                </v-img>
-              </v-card>
-            </div>
-          </v-hover>
-        </v-col>
-        <v-col cols="12" md="3" class="pt-0 px-0">
-          <v-hover v-slot="{ hover }">
-            <div>
-              <v-card
-                class="rounded-0"
-                v-if="DiscoverMovie"
-                link
-                :to="'/movie/' + DiscoverMovie[2].id"
-                :ripple="false"
-              >
-                <v-img
-                  class="align-end"
-                  :class="hover ? 'imageHover' : ''"
-                  position="top center"
-                  height="200"
-                  :src="
-                    'http://image.tmdb.org/t/p/original' +
-                      DiscoverMovie[2].backdrop_path
-                  "
-                >
-                  <v-card
-                    class="rounded-0"
-                    :color="hover ? 'rgba(0,0,0,0.5)' : 'rgba(30,30,30,0.5)'"
-                    style="backdrop-filter:blur(20px);"
-                  >
-                    <v-card-text class="white--text">
-                      {{ DiscoverMovie[2].title }}
-                    </v-card-text>
-                  </v-card>
-                </v-img>
-              </v-card>
-            </div>
-          </v-hover>
-        </v-col>
-        <v-col cols="12" md="3" class="pt-0 px-0">
-          <v-hover v-slot="{ hover }">
-            <div>
-              <v-card
-                class="rounded-0"
-                v-if="DiscoverTv"
-                link
-                :to="'/movie/' + DiscoverTv[2].id"
-                :ripple="false"
-              >
-                <v-img
-                  class="align-end"
-                  :class="hover ? 'imageHover' : ''"
-                  position="top center"
-                  height="200"
-                  :src="
-                    'http://image.tmdb.org/t/p/original' +
-                      DiscoverTv[2].backdrop_path
-                  "
-                >
-                  <v-card
-                    class="rounded-0"
-                    :color="hover ? 'rgba(0,0,0,0.5)' : 'rgba(30,30,30,0.5)'"
-                    style="backdrop-filter:blur(20px);"
-                  >
-                    <v-card-text class="white--text">
-                      {{ DiscoverTv[2].name }}
-                    </v-card-text>
-                  </v-card>
-                </v-img>
-              </v-card>
-            </div>
-          </v-hover>
-        </v-col>
-        <v-col cols="12" md="3" class="pt-0 pl-0">
-          <v-hover v-slot="{ hover }">
-            <div>
-              <v-card
-                class="rounded-0"
-                v-if="DiscoverMovie"
-                link
-                :to="'/movie/' + DiscoverMovie[3].id"
-                :ripple="false"
-              >
-                <v-img
-                  class="align-end"
-                  :class="hover ? 'imageHover' : ''"
-                  position="top center"
-                  height="200"
-                  :src="
-                    'http://image.tmdb.org/t/p/original' +
-                      DiscoverMovie[3].backdrop_path
-                  "
-                >
-                  <v-card
-                    class="rounded-0"
-                    :color="hover ? 'rgba(0,0,0,0.5)' : 'rgba(30,30,30,0.5)'"
-                    style="backdrop-filter:blur(20px);"
-                  >
-                    <v-card-text class="white--text">
-                      {{ DiscoverMovie[3].title }}
-                    </v-card-text>
-                  </v-card>
-                </v-img>
-              </v-card>
-            </div>
-          </v-hover>
-        </v-col>
-      </v-row>
-    </v-container> -->
+                </div>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-carousel-item>
+      </v-carousel>
+    </v-hover>
   </div>
 </template>
 
@@ -287,18 +101,29 @@
 export default {
   data() {
     return {
+      carouselModel: null,
       DiscoverMovie: null,
       DiscoverTv: null,
+      error: null,
     };
   },
   mounted() {
-    this.$http.get("discover/movie").then((res) => {
-      this.DiscoverMovie = res.data.results;
-      console.log(res);
-    }),
-      this.$http.get("discover/tv").then((res) => {
-        this.DiscoverTv = res.data.results;
-      });
+    this.discoverMovie();
+    // this.$http.get("discover/tv").then((res) => {
+    //   this.DiscoverTv = res.data.results;
+    // });
+  },
+  methods: {
+    discoverMovie() {
+      this.$http
+        .get("discover/movie")
+        .then((res) => {
+          this.DiscoverMovie = res.data.results;
+        })
+        .catch((error) => {
+          console.log("Top Carousel" + error);
+        });
+    },
   },
 };
 </script>
