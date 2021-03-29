@@ -44,7 +44,7 @@
                         elevation="0"
                         height="900"
                         class="py-10 rounded-0 d-flex align-end"
-                        style="background:linear-gradient(0deg,rgba(30,30,30,1),rgba(30,30,30,0));"
+                        style="background:linear-gradient(0deg,rgba(18,18,18,1),rgba(30,30,30,0));"
                       >
                         <v-container>
                           <v-row>
@@ -76,8 +76,8 @@
                                   <v-icon class="mr-2">info</v-icon> More
                                   Info</v-btn
                                 >
-                                <v-btn large class="rounded-pill">
-                                  <v-icon>play_arrow</v-icon>
+                                <v-btn large outlined class="rounded-pill">
+                                  <v-icon class="mr-2">play_arrow</v-icon>
                                   Play Now
                                 </v-btn>
                               </div>
@@ -109,9 +109,6 @@ export default {
   },
   mounted() {
     this.discoverMovie();
-    // this.$http.get("discover/tv").then((res) => {
-    //   this.DiscoverTv = res.data.results;
-    // });
   },
   methods: {
     discoverMovie() {
@@ -121,7 +118,7 @@ export default {
           this.DiscoverMovie = res.data.results;
         })
         .catch((error) => {
-          console.log("Top Carousel" + error);
+          console.log("Top Carousel Movie Discover" + error);
         });
     },
   },

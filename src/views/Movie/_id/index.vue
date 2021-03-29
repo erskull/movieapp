@@ -93,6 +93,7 @@
                                       style="border:0;"
                                       allowfullscreen
                                       loading="lazy"
+                                      seamless="seamless"
                                     ></iframe>
                                   </v-responsive>
                                 </v-card-text>
@@ -107,11 +108,12 @@
                               <template v-slot:activator="{ on, attrs }">
                                 <v-btn
                                   large
+                                  outlined
                                   v-bind="attrs"
                                   v-on="on"
                                   class="rounded-pill"
                                 >
-                                  <v-icon>play_arrow</v-icon>
+                                  <v-icon class="mr-2">play_arrow</v-icon>
                                   Play Trailer
                                 </v-btn>
                               </template>
@@ -164,19 +166,6 @@
     <v-container>
       <v-row>
         <v-col cols="12" md="8">
-          <v-card class="mb-3">
-            <v-responsive :aspect-ratio="16 / 9">
-              <iframe
-                :src="'https://www.2embed.ru/embed/imdb/movie?id=' + imdbId"
-                frameborder="0"
-                width="100%"
-                height="100%"
-                style="border:0;"
-                allowfullscreen
-                loading="lazy"
-              ></iframe>
-            </v-responsive>
-          </v-card>
           <v-card class="mb-3">
             <v-card-title>Cast</v-card-title>
           </v-card>
