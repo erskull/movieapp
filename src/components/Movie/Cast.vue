@@ -9,7 +9,14 @@
         :class="castExpanded ? 'cast-expanded' : 'cast-unexpanded'"
       >
         <!-- style="max-height:1000px;overflow:hidden;" -->
-        <v-col v-for="(cast, i) in casts" :key="i" cols="12" md="3">
+        <v-col
+          v-for="(cast, i) in casts"
+          :key="i"
+          cols="6"
+          xs="6"
+          sm="3"
+          md="3"
+        >
           <v-card flat class="rounded-0">
             <v-img
               height="280"

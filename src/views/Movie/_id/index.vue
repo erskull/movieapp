@@ -28,13 +28,17 @@
                 >
                   <v-container>
                     <v-row>
-                      <v-col cols="12" md="3">
+                      <v-col class="d-flex" cols="12" md="3">
+                        <v-spacer></v-spacer>
                         <v-img
+                          height="300"
+                          width="200"
                           :src="
                             'http://image.tmdb.org/t/p/original' +
                               currentMovie.poster_path
                           "
                         ></v-img>
+                        <v-spacer></v-spacer>
                       </v-col>
                       <v-col cols="12" md="6" class="d-flex align-end">
                         <div>
@@ -238,4 +242,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss">
+.v-dialog {
+  box-shadow: unset !important;
+}
+</style>
