@@ -20,7 +20,22 @@ export default {
 };
 </script>
 <style lang="scss">
-div.conatiner--fluid {
-  max-width: 1600px;
+@media (min-width: 1904px) {
+  .container {
+    max-width: 1366px !important;
+  }
+  .container--fluid {
+    max-width: 1920px !important;
+  }
+}
+@media (min-width: 1264px) {
+  .container {
+    // max-width: 1920px !important;
+  }
+}
+@media (min-width: 960px) {
+  .container {
+    // max-width: 1920px !important;
+  }
 }
 </style>

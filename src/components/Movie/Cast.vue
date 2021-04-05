@@ -2,8 +2,9 @@
   <div class="cast">
     <v-card class="rounded-0" style="position:relative;">
       <v-card-title>Cast</v-card-title>
-      <!-- <v-card flat> -->
+      <v-divider></v-divider>
       <v-row
+        class="position-relative"
         no-gutters
         :class="castExpanded ? 'cast-expanded' : 'cast-unexpanded'"
       >
@@ -17,10 +18,6 @@
             >
               <template v-slot:placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
-                  <!-- <v-progress-circular
-                          indeterminate
-                          color="grey lighten-5"
-                        ></v-progress-circular> -->
                   No Image Available
                 </v-row>
               </template>
@@ -30,6 +27,10 @@
             </v-card-text>
           </v-card>
         </v-col>
+        <div
+          v-if="!castExpanded"
+          style="position:absolute;bottom:44px;width:100%;height:200px;background:linear-gradient(0deg,rgba(30,30,30,1),rgba(30,30,30,0));"
+        ></div>
       </v-row>
       <v-btn
         color="primary"
@@ -38,7 +39,13 @@
         @click="castExpanded = !castExpanded"
         class="rounded-0"
       >
-        View More
+        View
+        <span class="ml-1" v-if="castExpanded">
+          Less
+        </span>
+        <span class="ml-1" v-else>
+          More
+        </span>
         <v-icon v-if="castExpanded" small class="ml-2">arrow_upward</v-icon>
         <v-icon v-else small class="ml-2">arrow_downward</v-icon>
       </v-btn>
@@ -57,7 +64,7 @@ export default {
   },
   methods: {
     async callCast() {
-      await this.$axios
+      await this.$http
         .get(
           "/movie/" +
             this.id +
@@ -65,14 +72,23 @@ export default {
             "?api_key=386a231dcbaf190d09142d84a5bf8fe5"
         )
         .then((res) => {
-          this.casts = res.cast;
+          this.casts = res.data.cast;
         });
     },
   },
   mounted() {
-    // this.callCast();
+    this.callCast();
   },
 };
 </script>
 
-<style></style>
+<style lang="scss">
+div.cast-expanded {
+  height: 100%;
+  overflow: visible;
+}
+div.cast-unexpanded {
+  height: 450px;
+  overflow: hidden;
+}
+</style>

@@ -101,6 +101,7 @@
                             </v-dialog>
                             <!-- Trailer Dialog -->
                             <v-dialog
+                              v-if="trailer"
                               v-model="TrailerDialog"
                               persistent
                               max-width="900px"
@@ -136,6 +137,7 @@
                                 <v-card-text class="pa-0 fill-height">
                                   <v-responsive :aspect-ratio="16 / 9">
                                     <iframe
+                                      v-if="trailer"
                                       width="100%"
                                       class="fill-height"
                                       :src="
@@ -166,9 +168,7 @@
     <v-container>
       <v-row>
         <v-col cols="12" md="8">
-          <v-card class="mb-3">
-            <v-card-title>Cast</v-card-title>
-          </v-card>
+          <Cast :id="id" />
         </v-col>
       </v-row>
     </v-container>
@@ -176,15 +176,20 @@
 </template>
 
 <script>
+import Cast from "@/components/Movie/Cast";
 export default {
+  components: {
+    Cast,
+  },
   data() {
     return {
       id: this.$route.params.id,
+      imdbId: null,
       currentMovie: "",
       movieIframe: null,
       TrailerDialog: false,
       MovieDialog: false,
-      trailer: "",
+      trailer: null,
     };
   },
   mounted() {
@@ -207,13 +212,16 @@ export default {
     },
     async callMovie() {
       await this.$http
-        .get("https://www.2embed.ru/embed/imdb/movie?id=tt5109280", {
+        .get("https://www.2embed.ru/embed/imdb/movie?id=" + this.imdbId, {
           headers: {
             "Access-Control-Allow-Origin": "*",
           },
         })
         .then((res) => {
           this.movieIframe = res;
+        })
+        .catch((error) => {
+          console.log("Movie Id 2embed error " + error);
         });
     },
     async callMovieTrailer() {
