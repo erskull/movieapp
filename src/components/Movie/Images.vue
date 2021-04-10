@@ -1,10 +1,11 @@
 <template>
   <div class="images">
-    <v-card class="rounded-0 mb-3">
+    <v-card elevation="0" color="transparent" class="rounded-0 mb-3">
       <v-card-title class="d-flex align-center py-0 pr-0"
         >Images
         <v-tabs
           height="64"
+          background-color="transparent"
           v-model="tabs"
           right
           style="width:unset !important;"
@@ -15,7 +16,7 @@
         </v-tabs>
       </v-card-title>
       <v-divider></v-divider>
-      <v-tabs-items v-model="tabs">
+      <v-tabs-items v-model="tabs" class="transparent">
         <v-tab-item>
           <v-row
             class="position-relative"
@@ -32,7 +33,7 @@
               sm="3"
               md="3"
             >
-              <v-card flat class="rounded-0">
+              <v-card flat color="transparent" class="rounded-0">
                 <v-img
                   height="280"
                   :src="'http://image.tmdb.org/t/p/w500' + backdrop.file_path"
@@ -48,9 +49,6 @@
                     </v-row>
                   </template>
                 </v-img>
-                <!-- <v-card-text class="text-center">
-                  {{ cast.name }} as {{ cast.character }}
-                </v-card-text> -->
               </v-card>
             </v-col>
             <div
@@ -78,7 +76,6 @@
             <v-icon v-else small class="ml-2">arrow_downward</v-icon>
           </v-btn>
         </v-tab-item>
-
         <v-tab-item>
           <v-row
             class="position-relative"
@@ -93,7 +90,7 @@
               sm="3"
               md="3"
             >
-              <v-card flat class="rounded-0">
+              <v-card flat elevation="0" color="transparent" class="rounded-0">
                 <v-img
                   height="280"
                   :src="'http://image.tmdb.org/t/p/w500' + poster.file_path"

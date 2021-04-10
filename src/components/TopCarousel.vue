@@ -76,14 +76,24 @@
                                 </p>
                                 <v-btn
                                   large
-                                  class="mr-3 primary rounded-pill"
+                                  class="mr-3 primary rounded-0"
                                   link
                                   :to="'/movie/' + DMovie.id"
                                 >
                                   <v-icon class="mr-2">info</v-icon> More
                                   Info</v-btn
                                 >
-                                <v-btn large outlined class="rounded-pill">
+                                <v-btn
+                                  large
+                                  outlined
+                                  class="rounded-0"
+                                  :to="{
+                                    name: 'Movie Id',
+                                    params: {
+                                      id: DMovie.id,
+                                    },
+                                  }"
+                                >
                                   <v-icon class="mr-2">play_arrow</v-icon>
                                   Play Now
                                 </v-btn>

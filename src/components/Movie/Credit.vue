@@ -17,7 +17,7 @@
         </v-tabs>
       </v-card-title>
       <v-divider></v-divider>
-      <v-tabs-items v-model="tabs">
+      <v-tabs-items v-model="tabs" class="transparent">
         <v-tab-item>
           <v-row
             class="position-relative"
@@ -32,7 +32,7 @@
               sm="3"
               md="3"
             >
-              <v-card flat class="rounded-0">
+              <v-card flat color="transparent" class="rounded-0">
                 <v-img
                   height="280"
                   :src="'http://image.tmdb.org/t/p/w500' + cast.profile_path"
@@ -76,7 +76,6 @@
             <v-icon v-else small class="ml-2">arrow_downward</v-icon>
           </v-btn>
         </v-tab-item>
-
         <v-tab-item>
           <v-row
             class="position-relative"
@@ -91,7 +90,12 @@
               sm="3"
               md="3"
             >
-              <v-card flat class="rounded-0">
+              <v-card
+                flat
+                color="transparent"
+                class="rounded-0"
+                style="height:100%;"
+              >
                 <v-img
                   height="280"
                   :src="'http://image.tmdb.org/t/p/w500' + crew.profile_path"
@@ -162,15 +166,10 @@ export default {
   },
   methods: {
     async callCredits() {
-      await this.$http
-        .get(
-          "/movie/" + this.id + "/credits"
-          // "?api_key=386a231dcbaf190d09142d84a5bf8fe5"
-        )
-        .then((res) => {
-          this.casts = res.data.cast;
-          this.crews = res.data.crew;
-        });
+      await this.$http.get("/movie/" + this.id + "/credits").then((res) => {
+        this.casts = res.data.cast;
+        this.crews = res.data.crew;
+      });
     },
   },
   mounted() {

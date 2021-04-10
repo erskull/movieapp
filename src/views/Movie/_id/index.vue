@@ -63,7 +63,7 @@
                               <template v-slot:activator="{ on, attrs }">
                                 <v-btn
                                   large
-                                  class="mr-3 primary rounded-lg"
+                                  class="mr-3 primary rounded-0"
                                   v-bind="attrs"
                                   v-on="on"
                                 >
@@ -120,7 +120,7 @@
                                   outlined
                                   v-bind="attrs"
                                   v-on="on"
-                                  class="rounded-lg"
+                                  class="rounded-0"
                                 >
                                   <v-icon class="mr-2">play_arrow</v-icon>
                                   Play Trailer
