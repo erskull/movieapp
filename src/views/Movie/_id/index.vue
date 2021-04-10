@@ -15,6 +15,7 @@
                 class="align-end"
                 min-height="600"
                 height="100vh"
+                max-height="650"
                 :src="
                   'http://image.tmdb.org/t/p/original' +
                     currentMovie.backdrop_path
@@ -25,7 +26,7 @@
                   elevation="0"
                   height="900"
                   class="py-10 rounded-0 d-flex align-end"
-                  style="background:linear-gradient(0deg,rgba(30,30,30,1),rgba(30,30,30,0))"
+                  style="background:linear-gradient(0deg,rgba(18,18,18,1),rgba(30,30,30,0)),linear-gradient(90deg,rgba(18,18,18,1),rgba(30,30,30,0));"
                 >
                   <v-container>
                     <v-row>
@@ -49,9 +50,9 @@
                           >
                             {{ currentMovie.title }}
                           </div>
-                          <p class="mb-3">
+                          <div class="mb-3">
                             {{ currentMovie.overview }}
-                          </p>
+                          </div>
                           <div>
                             <!-- Movie Dialog -->
                             <v-dialog
@@ -62,7 +63,7 @@
                               <template v-slot:activator="{ on, attrs }">
                                 <v-btn
                                   large
-                                  class="mr-3 primary rounded-pill"
+                                  class="mr-3 primary rounded-lg"
                                   v-bind="attrs"
                                   v-on="on"
                                 >
@@ -119,7 +120,7 @@
                                   outlined
                                   v-bind="attrs"
                                   v-on="on"
-                                  class="rounded-pill"
+                                  class="rounded-lg"
                                 >
                                   <v-icon class="mr-2">play_arrow</v-icon>
                                   Play Trailer

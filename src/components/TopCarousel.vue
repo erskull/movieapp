@@ -36,6 +36,7 @@
                       class="align-end"
                       min-height="600"
                       height="100vh"
+                      max-height="700"
                       :src="
                         'http://image.tmdb.org/t/p/original' +
                           DMovie.backdrop_path
@@ -46,7 +47,7 @@
                         elevation="0"
                         height="900"
                         class="py-10 rounded-0 d-flex align-end"
-                        style="background:linear-gradient(0deg,rgba(18,18,18,1),rgba(30,30,30,0));"
+                        style="background:linear-gradient(0deg,rgba(18,18,18,1),rgba(30,30,30,0)),linear-gradient(90deg,rgba(18,18,18,1),rgba(30,30,30,0));"
                       >
                         <v-container>
                           <v-row>
