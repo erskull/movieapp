@@ -13,7 +13,8 @@
               <v-img
                 position="top top"
                 class="align-end"
-                height="600"
+                min-height="600"
+                height="100vh"
                 :src="
                   'http://image.tmdb.org/t/p/original' +
                     currentMovie.backdrop_path
@@ -31,6 +32,7 @@
                       <v-col class="d-flex" cols="12" md="3">
                         <v-spacer></v-spacer>
                         <v-img
+                          class="hidden-md-and-down"
                           height="300"
                           width="200"
                           :src="
@@ -94,10 +96,11 @@
                                       frameborder="0"
                                       width="100%"
                                       height="100%"
-                                      style="border:0;"
-                                      allowfullscreen
                                       loading="lazy"
                                       seamless="seamless"
+                                      scrolling="no"
+                                      allowfullscreen
+                                      style="border:0;"
                                     ></iframe>
                                   </v-responsive>
                                 </v-card-text>
@@ -172,7 +175,18 @@
     <v-container>
       <v-row>
         <v-col cols="12" md="8">
-          <Cast :id="id" />
+          <Credit :id="id" />
+        </v-col>
+        <v-col cols="12" md="4">
+          <v-card class="rounded-0">
+            <v-card-title>Cast</v-card-title>
+            <v-divider></v-divider>
+          </v-card>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12" md="12">
+          <Images :id="id" />
         </v-col>
       </v-row>
     </v-container>
@@ -180,10 +194,12 @@
 </template>
 
 <script>
-import Cast from "@/components/Movie/Cast";
+import Credit from "@/components/Movie/Credit";
+import Images from "@/components/Movie/Images";
 export default {
   components: {
-    Cast,
+    Credit,
+    Images,
   },
   data() {
     return {

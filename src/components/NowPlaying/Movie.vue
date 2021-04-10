@@ -40,8 +40,9 @@
             style="overflow:hidden;"
           >
             <v-card elevation="12" class="rounded-0">
+              <!-- height="400" -->
               <v-img
-                height="400"
+                height="300"
                 class="align-end"
                 :src="'http://image.tmdb.org/t/p/w500' + NPMovie.poster_path"
               >

@@ -5,7 +5,8 @@
         v-model="carouselModel"
         hide-delimiters
         show-arrows-on-hover
-        height="600"
+        min-height="600"
+        height="100vh"
         :interval="4000"
         :cycle="hover ? false : true"
       >
@@ -33,7 +34,8 @@
                     <v-img
                       position="top top"
                       class="align-end"
-                      height="600"
+                      min-height="600"
+                      height="100vh"
                       :src="
                         'http://image.tmdb.org/t/p/original' +
                           DMovie.backdrop_path
