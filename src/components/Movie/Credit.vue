@@ -1,7 +1,7 @@
 <template>
   <div class="credit">
     <v-card color="transparent" elevation="0" class="rounded-0 mb-3">
-      <v-card-title class="d-flex align-center py-0 pr-0"
+      <v-card-title class="d-flex align-center py-0 px-0"
         >Cast
 
         <v-tabs

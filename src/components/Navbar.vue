@@ -28,13 +28,17 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      offsetTop: 0,
+    };
+  },
+  methods: {},
+};
 </script>
 
 <style lang="scss">
-// @import "https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap";
-//  <link href="
-// " rel="stylesheet">
 .v-btn.logo {
   &::before {
     background-color: transparent !important;

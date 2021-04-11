@@ -17,6 +17,13 @@ export default {
     Navbar,
     // Footer,
   },
+  data() {
+    return {
+      onScroll() {
+        alert("awd awd awd ");
+      },
+    };
+  },
 };
 </script>
 <style lang="scss">

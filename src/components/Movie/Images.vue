@@ -1,7 +1,7 @@
 <template>
   <div class="images">
     <v-card elevation="0" color="transparent" class="rounded-0 mb-3">
-      <v-card-title class="d-flex align-center py-0 pr-0"
+      <v-card-title class="d-flex align-center py-0 px-0"
         >Images
         <v-tabs
           height="64"
@@ -45,7 +45,10 @@
                       align="center"
                       justify="center"
                     >
-                      No Image Available
+                      <v-progress-circular
+                        indeterminate
+                        color="primary"
+                      ></v-progress-circular>
                     </v-row>
                   </template>
                 </v-img>
@@ -95,20 +98,19 @@
                   height="280"
                   :src="'http://image.tmdb.org/t/p/w500' + poster.file_path"
                 >
-                  <!-- :alt="crew.name" -->
                   <template v-slot:placeholder>
                     <v-row
                       class="fill-height ma-0"
                       align="center"
                       justify="center"
                     >
-                      No Image Available
+                      <v-progress-circular
+                        indeterminate
+                        color="primary"
+                      ></v-progress-circular>
                     </v-row>
                   </template>
                 </v-img>
-                <!-- <v-card-text class="text-center">
-                  {{ crew.name }} for {{ crew.job }}
-                </v-card-text> -->
               </v-card>
             </v-col>
             <div
