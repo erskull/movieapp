@@ -15,39 +15,39 @@
         <v-col
           class="pt-0"
           cols="12"
+          sm="6"
           md="3"
           v-for="(NPMovie, i) in NowPlayingMovieToggle"
           :key="i"
         >
-          <v-hover v-slot="{ hover }">
-            <!-- class="rounded-0" -->
-            <v-card
-              :elevation="hover ? 4 : 8"
-              link
-              class="rounded-0"
-              :ripple="false"
+          <!-- <v-hover v-slot="{ hover }"> -->
+          <v-card
+            elevation="0"
+            link
+            class="rounded-0"
+            :ripple="false"
+            height="400"
+            :to="'/movie/' + NPMovie.id"
+            style="overflow:hidden;"
+          >
+            <v-img
               height="100%"
-              :to="'/movie/' + NPMovie.id"
-              style="overflow:hidden;"
+              class="align-end"
+              :src="'https://image.tmdb.org/t/p/w500' + NPMovie.poster_path"
             >
-              <v-img
-                height="400"
-                class="align-end"
-                :src="'http://image.tmdb.org/t/p/w500' + NPMovie.poster_path"
+              <!-- color="linear-gradient(90deg,rgba(30,30,30,1)" -->
+              <v-card
+                elevation="0"
+                class="rounded-0"
+                style="background:linear-gradient(90deg,rgba(30,30,30,1),rgba(30,30,30,0))"
               >
-                <v-card
-                  color="linear-gradient(90deg,rgba(30,30,30,1)"
-                  elevation="10"
-                  class="rounded-0"
-                  style="background:linear-gradient(90deg,rgba(30,30,30,1),rgba(30,30,30,0))"
-                >
-                  <v-card-text class="white--text text-body-1">
-                    {{ NPMovie.title }}
-                  </v-card-text>
-                </v-card>
-              </v-img>
-            </v-card>
-          </v-hover>
+                <v-card-text class="white--text text-body-1">
+                  {{ NPMovie.title }}
+                </v-card-text>
+              </v-card>
+            </v-img>
+          </v-card>
+          <!-- </v-hover> -->
         </v-col>
         <v-col class="d-flex" cols="12">
           <v-spacer></v-spacer>

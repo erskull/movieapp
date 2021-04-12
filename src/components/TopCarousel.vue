@@ -5,10 +5,9 @@
         v-model="carouselModel"
         hide-delimiters
         show-arrows-on-hover
-        min-height="600"
-        height="100vh"
         :interval="4000"
         :cycle="hover ? false : true"
+        height="630"
       >
         <template v-slot:prev="{ on, attrs }">
           <v-btn icon x-large color="rgb(30,30,30)" v-bind="attrs" v-on="on">
@@ -20,7 +19,7 @@
             <v-icon color="white">east</v-icon>
           </v-btn>
         </template>
-        <v-carousel-item v-for="(DMovie, i) in DiscoverMovie" :key="i">
+        <v-carousel-item v-for="(Disc, i) in Discover" :key="i">
           <v-container fluid class="pa-0">
             <v-row>
               <v-col cols="12" md="12">
@@ -29,17 +28,17 @@
                     elevation="0"
                     width="100%"
                     class="rounded-0"
-                    v-if="DiscoverMovie"
+                    v-if="Disc"
                   >
+                    <!-- min-height="600"
+                      max-height="700" -->
                     <v-img
+                      max-height="630"
                       position="top top"
                       class="align-end"
-                      min-height="600"
-                      height="100vh"
-                      max-height="700"
                       :src="
-                        'http://image.tmdb.org/t/p/original' +
-                          DMovie.backdrop_path
+                        'https://image.tmdb.org/t/p/original' +
+                          Disc.backdrop_path
                       "
                     >
                       <v-card
@@ -58,8 +57,8 @@
                                 height="300"
                                 width="200"
                                 :src="
-                                  'http://image.tmdb.org/t/p/w500' +
-                                    DMovie.poster_path
+                                  'https://image.tmdb.org/t/p/w500' +
+                                    Disc.poster_path
                                 "
                               ></v-img>
                               <v-spacer></v-spacer>
@@ -67,18 +66,29 @@
                             <v-col cols="12" md="6" class="d-flex align-end">
                               <div>
                                 <div
+                                  v-if="$route.name === 'Home'"
                                   class="text-h3 font-weight-black white--text mb-3"
                                 >
-                                  {{ DMovie.title }}
+                                  {{ Disc.title }}
+                                </div>
+                                <div
+                                  v-else
+                                  class="text-h3 font-weight-black white--text mb-3"
+                                >
+                                  {{ Disc.name }}
                                 </div>
                                 <p class="mb-3">
-                                  {{ DMovie.overview }}
+                                  {{ Disc.overview }}
                                 </p>
                                 <v-btn
                                   large
                                   class="mr-3 primary rounded-0"
                                   link
-                                  :to="'/movie/' + DMovie.id"
+                                  :to="
+                                    $route.name === 'home'
+                                      ? '/movie/' + Disc.id
+                                      : '/tv-show/' + Disc.id
+                                  "
                                 >
                                   <v-icon class="mr-2">info</v-icon> More
                                   Info</v-btn
@@ -90,7 +100,7 @@
                                   :to="{
                                     name: 'Movie Id',
                                     params: {
-                                      id: DMovie.id,
+                                      id: Disc.id,
                                     },
                                   }"
                                 >
@@ -119,20 +129,19 @@ export default {
   data() {
     return {
       carouselModel: null,
-      DiscoverMovie: null,
-      DiscoverTv: null,
-      error: null,
+      Discover: null,
+      // DiscoverTv: null
     };
   },
   mounted() {
     this.discoverMovie();
   },
   methods: {
-    discoverMovie() {
-      this.$http
-        .get("discover/movie")
+    async discoverMovie() {
+      await this.$http
+        .get(this.$route.name === "Home" ? "discover/movie" : "discover/tv")
         .then((res) => {
-          this.DiscoverMovie = res.data.results;
+          this.Discover = res.data.results;
         })
         .catch((error) => {
           console.log("Top Carousel Movie Discover" + error);
