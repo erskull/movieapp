@@ -31,7 +31,7 @@
               cols="6"
               xs="6"
               sm="3"
-              md="3"
+              md="6"
             >
               <v-card flat color="transparent" class="rounded-0">
                 <v-img
@@ -91,7 +91,7 @@
               cols="6"
               xs="6"
               sm="3"
-              md="3"
+              md="4"
             >
               <v-card flat elevation="0" color="transparent" class="rounded-0">
                 <v-img

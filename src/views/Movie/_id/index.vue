@@ -40,6 +40,7 @@
                             'http://image.tmdb.org/t/p/original' +
                               currentMovie.poster_path
                           "
+                          style="border:10px solid rgb(30,30,30);"
                         ></v-img>
                         <v-spacer></v-spacer>
                       </v-col>
@@ -175,21 +176,65 @@
     </v-container>
     <v-container>
       <v-row>
-        <v-col cols="12" md="8">
+        <v-col cols="12" md="6">
           <Credit :id="id" />
         </v-col>
-        <v-col cols="12" md="4">
-          <v-card class="rounded-0">
-            <v-card-title>Cast</v-card-title>
-            <v-divider></v-divider>
+        <v-col cols="12" md="6">
+          <Images :id="id" />
+        </v-col>
+        <v-col cols="12" md="12">
+          <v-card flat color="transparent" class="rounded-0">
+            <v-card-title class="px-0">Similiar Movies</v-card-title>
+            <v-row no-gutters>
+              <v-col
+                cols="12"
+                md="2"
+                v-for="(simi, i) in similiarMovie"
+                :key="i"
+              >
+                <v-hover v-slot:default="{ hover }">
+                  <v-card
+                    elevation="0"
+                    link
+                    class="rounded-0"
+                    :ripple="false"
+                    height="400"
+                    :to="'/movie/' + simi.id"
+                    style="overflow:hidden;"
+                  >
+                    <v-img
+                      height="100%"
+                      class="align-end"
+                      :class="hover"
+                      :src="
+                        'https://image.tmdb.org/t/p/w500' + simi.poster_path
+                      "
+                    >
+                      <v-card
+                        elevation="0"
+                        class="rounded-0"
+                        style="background:linear-gradient(90deg,rgba(30,30,30,1),rgba(30,30,30,0));backdrop-filter:blur(1px)"
+                      >
+                        <v-card-text class="white--text text-body-1">
+                          {{ simi.title }}
+                        </v-card-text>
+                      </v-card>
+                    </v-img>
+                  </v-card>
+                </v-hover>
+              </v-col>
+            </v-row>
+            <v-card-text>
+              <ul>
+                <li v-for="(simi, i) in similiarMovie" :key="i">
+                  {{ simi.title }}
+                </li>
+              </ul>
+            </v-card-text>
           </v-card>
         </v-col>
       </v-row>
-      <v-row>
-        <v-col cols="12" md="12">
-          <Images :id="id" />
-        </v-col>
-      </v-row>
+      <v-row> </v-row>
     </v-container>
   </div>
 </template>
@@ -211,10 +256,14 @@ export default {
       TrailerDialog: false,
       MovieDialog: false,
       trailer: null,
+      similiarMovie: "",
     };
   },
   mounted() {
-    this.onStartup(), this.callMovie(), this.callMovieTrailer();
+    this.onStartup(),
+      this.callMovie(),
+      this.callMovieTrailer(),
+      this.callSimiliarMovies();
   },
   methods: {
     async onStartup() {
@@ -254,6 +303,11 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    async callSimiliarMovies() {
+      await this.$http.get("/movie/" + this.id + "/similar").then((res) => {
+        this.similiarMovie = res.data.results;
+      });
     },
   },
 };

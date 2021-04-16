@@ -18,68 +18,6 @@
             to="/"
             >MY MOVIE APP</v-btn
           >
-          <!-- {{ this.query }}
-          {{ this.result }} -->
-          <v-spacer></v-spacer>
-          <v-autocomplete
-            allow-overflow
-            v-model="searchModal"
-            :items="items"
-            :loading="isLoading"
-            :search-input.sync="search"
-            clearable
-            hide-details
-            hide-selected
-            item-text="name"
-            item-value="symbol"
-            label="Search for Movie/Tv Shows"
-            solo-inverted
-          >
-            <template v-slot:no-data>
-              <v-list-item>
-                <v-list-item-title>
-                  Search for your favorite
-                  <strong>Movie/Tv Shows</strong>
-                </v-list-item-title>
-              </v-list-item>
-            </template>
-            <template v-slot:selection="{ attr, on, item, selected }">
-              <input type="text" :input-value="selected" />
-              <!-- <v-chip
-                v-bind="attr"
-                :input-value="selected"
-                color="blue-grey"
-                class="white--text"
-                v-on="on"
-              >
-                <v-icon left>
-                  mdi-bitcoin
-                </v-icon>
-                <span v-text="item.name"></span>
-              </v-chip> -->
-            </template>
-            <template v-slot:item="{ item }">
-              <v-list-item-avatar
-                color="indigo"
-                class="headline font-weight-light white--text"
-              >
-                <v-img
-                  :src="'http://image.tmdb.org/t/p/original' + item.poster_path"
-                ></v-img>
-              </v-list-item-avatar>
-              <v-list-item-content>
-                <v-list-item-title
-                  v-text="item.name ? item.name : item.title"
-                ></v-list-item-title>
-                <!-- <v-list-item-subtitle
-                  v-text="item.symbol"
-                ></v-list-item-subtitle> -->
-              </v-list-item-content>
-              <!-- <v-list-item-action>
-                <v-icon>mdi-bitcoin</v-icon>
-              </v-list-item-action> -->
-            </template>
-          </v-autocomplete>
           <v-spacer></v-spacer>
           <v-tabs
             height="70"

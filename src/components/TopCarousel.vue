@@ -60,6 +60,7 @@
                                   'https://image.tmdb.org/t/p/w500' +
                                     Disc.poster_path
                                 "
+                                style="border:10px solid rgb(30,30,30);"
                               ></v-img>
                               <v-spacer></v-spacer>
                             </v-col>
@@ -85,7 +86,7 @@
                                   class="mr-3 primary rounded-0"
                                   link
                                   :to="
-                                    $route.name === 'home'
+                                    $route.name === 'Home'
                                       ? '/movie/' + Disc.id
                                       : '/tv-show/' + Disc.id
                                   "
@@ -97,12 +98,11 @@
                                   large
                                   outlined
                                   class="rounded-0"
-                                  :to="{
-                                    name: 'Movie Id',
-                                    params: {
-                                      id: Disc.id,
-                                    },
-                                  }"
+                                  :to="
+                                    $route.name === 'Home'
+                                      ? '/movie/' + Disc.id
+                                      : '/tv-show/' + Disc.id
+                                  "
                                 >
                                   <v-icon class="mr-2">play_arrow</v-icon>
                                   Play Now

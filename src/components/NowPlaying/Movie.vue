@@ -20,34 +20,35 @@
           v-for="(NPMovie, i) in NowPlayingMovieToggle"
           :key="i"
         >
-          <!-- <v-hover v-slot="{ hover }"> -->
-          <v-card
-            elevation="0"
-            link
-            class="rounded-0"
-            :ripple="false"
-            height="400"
-            :to="'/movie/' + NPMovie.id"
-            style="overflow:hidden;"
-          >
-            <v-img
-              height="100%"
-              class="align-end"
-              :src="'https://image.tmdb.org/t/p/w500' + NPMovie.poster_path"
+          <v-hover v-slot:default="{ hover }">
+            <v-card
+              elevation="0"
+              link
+              class="rounded-0"
+              :ripple="false"
+              height="400"
+              :to="'/movie/' + NPMovie.id"
+              style="overflow:hidden;"
             >
-              <!-- color="linear-gradient(90deg,rgba(30,30,30,1)" -->
-              <v-card
-                elevation="0"
-                class="rounded-0"
-                style="background:linear-gradient(90deg,rgba(30,30,30,1),rgba(30,30,30,0))"
+              <v-img
+                style="border:5px solid rgb(30,30,30);"
+                height="100%"
+                class="align-end"
+                :class="hover"
+                :src="'https://image.tmdb.org/t/p/w500' + NPMovie.poster_path"
               >
-                <v-card-text class="white--text text-body-1">
-                  {{ NPMovie.title }}
-                </v-card-text>
-              </v-card>
-            </v-img>
-          </v-card>
-          <!-- </v-hover> -->
+                <v-card
+                  elevation="0"
+                  class="rounded-0"
+                  style="background:linear-gradient(90deg,rgba(30,30,30,1),rgba(30,30,30,0));backdrop-filter:blur(1px)"
+                >
+                  <v-card-text class="white--text text-body-1">
+                    {{ NPMovie.title }}
+                  </v-card-text>
+                </v-card>
+              </v-img>
+            </v-card>
+          </v-hover>
         </v-col>
         <v-col class="d-flex" cols="12">
           <v-spacer></v-spacer>
@@ -65,12 +66,14 @@
                 of Now Playing
               </span>
               <!-- <span :class="hover ? 'mr-3' : 'mr-0'"> -->
-              <v-icon :class="hover ? '' : ''" v-if="seeAll" small>west</v-icon>
-              <v-icon v-else small>east</v-icon>
+              <!-- <v-icon :class="hover ? '' : ''" v-if="seeAll" small>west</v-icon>
+              <v-icon v-else small>east</v-icon> -->
               <!-- </span> -->
+              <v-icon small :class="hover ? 'pr-1' : 'pr-3'"
+                >fal fa-arrow-right</v-icon
+              >
             </v-btn>
           </v-hover>
-          <v-spacer></v-spacer>
         </v-col>
       </v-row>
     </v-container>
